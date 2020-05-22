@@ -2,6 +2,7 @@
 
 namespace Kunstmaan\UtilitiesBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader;
@@ -28,6 +29,12 @@ class KunstmaanUtilitiesExtension extends Extension
             $container->setParameter('kunstmaan_utilities.cipher.secret', $container->getParameter('secret'));
         } else {
             $container->setParameter('kunstmaan_utilities.cipher.secret', $config['cipher']['secret']);
+        }
+
+        if ($container->hasParameter('kunstmaan_utilities.mysql57_sql_mode_fix.mode.config')) {
+            throw new InvalidConfigurationException('Don\'t use the `%s` parameter directly, use the `%s` config!');
+        } else {
+            $container->setParameter('kunstmaan_utilities.mysql57_sql_mode_fix.mode.config', $config['mysql57_sql_mode_fix']);
         }
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));

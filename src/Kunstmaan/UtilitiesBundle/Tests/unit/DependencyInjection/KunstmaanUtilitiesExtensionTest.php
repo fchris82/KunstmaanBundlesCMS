@@ -3,6 +3,7 @@
 namespace Kunstmaan\UtilitiesBundle\Tests\DependencyInjection;
 
 use Kunstmaan\UtilitiesBundle\DependencyInjection\KunstmaanUtilitiesExtension;
+use Kunstmaan\UtilitiesBundle\EventListener\Mysql57SqlModeFixEventSubscriber;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
@@ -24,6 +25,7 @@ class KunstmaanUtilitiesExtensionTest extends AbstractExtensionTestCase
         $this->load();
 
         $this->assertContainerBuilderHasParameter('kunstmaan_utilities.cipher.secret', '%kernel.secret%');
+        $this->assertContainerBuilderHasParameter('kunstmaan_utilities.mysql57_sql_mode_fix.mode.config', Mysql57SqlModeFixEventSubscriber::MODE_ALERT);
     }
 
     public function testParameterWithSecretParameter()

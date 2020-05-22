@@ -21,4 +21,6 @@ services:
         tags:
             - { name: twig.extension }
 
-
+    kunstmaan_utilities.mysql57_sql_mode_fix:
+        class: Kunstmaan\UtilitiesBundle\EventListener\Mysql57SqlModeFixEventSubscriber
+        arguments: ['%kunstmaan_utilities.mysql57_sql_mode_fix.mode.config%']
